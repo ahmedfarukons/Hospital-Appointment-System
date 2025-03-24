@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sağlık Merkezi - Ana Sayfa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="ana"><img src="resimler/sağlık.png" alt=""></div>
+
+    <div class="geri">
+        <header>
+            <nav>
+                <div class="logo">Sağlık Merkezi</div>
+                <ul>
+                    <li><a href="index.html" class="active">Ana Sayfa</a></li>
+                    <li><a href="randevu.html">Randevu Al</a></li>
+                    <li><a href="doktorlar.html">Doktorlarımız</a></li>
+                    <li><a href="iletisim.html">İletişim</a></li>
+                </ul>
+            </nav>
+        </header>
+    
+        <main>
+            <!-- Hero Bölümü -->
+            <section id="hero">
+                <div class="hero-content">
+                    <img src="resimler/sağlık.png" alt="Logo">
+                    <h1>Sağlığınız İçin Yanınızdayız</h1>
+                    <p>Uzman kadromuz ve modern teknolojimizle kaliteli sağlık hizmeti sunuyoruz</p>
+                    <button onclick="window.location.href='randevu.html'" class="cta-button">Hemen Randevu Al</button>
+                </div>
+            </section>
+    
+            <!-- Hizmetlerimiz -->
+            <section id="hizmetler">
+                <h2>Hizmetlerimiz</h2>
+                <div class="hizmet-kartlari">
+                    <div class="hizmet-kart">
+                        <img src="resimler/avrasya_hospital_dahiliye.jpg" alt="Dahiliye">
+                        <h3>Dahiliye</h3>
+                        <p>İç hastalıkları alanında uzman kadromuzla hizmetinizdeyiz.</p>
+                    </div>
+                    <div class="hizmet-kart">
+                        <img src="resimler/Front-view-doctor-holding-medical-element-7193_h1200.jpg" alt="Kardiyoloji">
+                        <h3>Kardiyoloji</h3>
+                        <p>Kalp sağlığınız için modern teknolojik imkanlarla yanınızdayız.</p>
+                    </div>
+                    <div class="hizmet-kart">
+                        <img src="resimler/Noroloji.jpg" alt="Nöroloji">
+                        <h3>Nöroloji</h3>
+                        <p>Sinir sistemi hastalıklarında deneyimli uzman kadromuz.</p>
+                    </div>
+                    <div class="hizmet-kart">
+                        <img src="resimler/Ortopedi-ve-Travmatoloji.jpg" alt="Ortopedi">
+                        <h3>Ortopedi</h3>
+                        <p>Kas ve iskelet sistemi rahatsızlıklarında uzman tedavi.</p>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Neden Biz -->
+            <section id="neden-biz">
+                <h2>Neden Bizi Seçmelisiniz?</h2>
+                <div class="ozellikler">
+                    <div class="ozellik">
+                        <img src="resimler/34-ilde-doktor-kadrolari-bos-kaldi-9047.jpg" alt="Uzman Kadro">
+                        <h3>Uzman Kadro</h3>
+                        <p>Alanında uzman ve deneyimli doktor kadromuz</p>
+                    </div>
+                    <div class="ozellik">
+                        <img src="resimler/modern-technologies-in-healthcare-AI.jpg.webp" alt="Modern Teknoloji">
+                        <h3>Modern Teknoloji</h3>
+                        <p>En son teknolojik tıbbi cihazlar</p>
+                    </div>
+                    <div class="ozellik">
+                        <img src="resimler/hiyjen.jpg" alt="Hijyenik Ortam">
+                        <h3>Hijyenik Ortam</h3>
+                        <p>Steril ve güvenli tedavi ortamı</p>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Randevu Formu -->
+            <section id="randevu-form">
+                <h2>Online Randevu</h2>
+                <form id="randevuForm">
+                    <div class="form-group">
+                        <label for="ad">Ad Soyad:</label>
+                        <input type="text" id="ad" required>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="tc">T.C. Kimlik No:</label>
+                        <input type="text" id="tc" maxlength="11" required>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="bolum">Bölüm Seçiniz:</label>
+                        <select id="bolum" required>
+                            <option value="">Seçiniz</option>
+                            <option value="dahiliye">Dahiliye</option>
+                            <option value="kardiyoloji">Kardiyoloji</option>
+                            <option value="noroloji">Nöroloji</option>
+                            <option value="ortopedi">Ortopedi</option>
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="tarih">Randevu Tarihi:</label>
+                        <input type="date" id="tarih" required>
+                    </div>
+    
+                    <button type="submit">Randevu Oluştur</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+</body>
+<script src="script.js"></script>
+</html>

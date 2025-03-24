@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim - Sağlık Merkezi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo" onclick="window.location.href='index.html'">Sağlık Merkezi</div>
+            <ul>
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li><a href="randevu.html">Randevu Al</a></li>
+                <li><a href="doktorlar.html">Doktorlarımız</a></li>
+                <li><a href="iletisim.html" class="active">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="iletisim-bolumu">
+            <h2>İletişim Bilgileri</h2>
+            
+            <div class="iletisim-grid">
+                <div class="iletisim-bilgi">
+                    <h3>Adres Bilgilerimiz</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Atatürk Caddesi No:123</p>
+                    <p>Merkez Mahallesi</p>
+                    <p>34000 İstanbul/Türkiye</p>
+                </div>
+
+                <div class="iletisim-bilgi">
+                    <h3>İletişim Numaralarımız</h3>
+                    <p><i class="fas fa-phone"></i> Telefon: (0212) 555 55 55</p>
+                    <p><i class="fas fa-fax"></i> Faks: (0212) 555 55 56</p>
+                    <p><i class="fas fa-envelope"></i> E-posta: info@saglikmerkezi.com</p>
+                </div>
+
+                <div class="iletisim-bilgi">
+                    <h3>Çalışma Saatleri</h3>
+                    <p>Hafta içi: 08:00 - 20:00</p>
+                    <p>Cumartesi: 09:00 - 16:00</p>
+                    <p>Pazar: Kapalı</p>
+                </div>
+            </div>
+
+            <div class="iletisim-form">
+                <h3>Bize Ulaşın</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="ad">Ad Soyad:</label>
+                        <input type="text" id="ad" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-posta:</label>
+                        <input type="email" id="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="konu">Konu:</label>
+                        <select id="konu" required>
+                            <option value="">Seçiniz</option>
+                            <option value="randevu">Randevu Hakkında</option>
+                            <option value="bilgi">Bilgi Talebi</option>
+                            <option value="sikayet">Şikayet/Öneri</option>
+                            <option value="diger">Diğer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mesaj">Mesajınız:</label>
+                        <textarea id="mesaj" rows="5" required></textarea>
+                    </div>
+
+                    <button type="submit">Mesaj Gönder</button>
+                </form>
+            </div>
+
+            <div class="harita">
+                <h3>Konum Bilgimiz</h3>
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.1234567891011!2d28.12345678901234!3d41.12345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDA3JzM0LjQiTiAyOMKwMDcnMzQuNCJF!5e0!3m2!1str!2str!4v1234567890123!5m2!1str!2str" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </section>
+    </main>
+</body>
+</html> 
