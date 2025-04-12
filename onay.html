@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevu Onayı</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('https://empowerwomen.create.vista.com/tr/photos/doktor-arka-plan/');
+            background-size: cover;
+            background-position: center;
+            background-color: #add8e6;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .confirmation-box {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 18px;
+            width: 70%;
+            max-width: 500px;
+        }
+        .confirm-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .confirm-button:hover {
+            background-color: #218838;
+        }
+        .cancel-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            position: static;
+        }
+        .cancel-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Randevunuzu Onaylayın</h1>
+    </div>
+    <div class="confirmation-box">
+        <div class="appointment-details">
+            <p><strong>Tarih:</strong> 01.01.2024</p>
+            <p><strong>Saat:</strong> 10:00</p>
+            <p><strong>Doktor:</strong> Dr. Ahmet Yılmaz</p>
+            <p><strong>Poliklinik:</strong> Kardiyoloji</p>
+        </div>
+    </div>
+    <button class="confirm-button" onclick="confirmAppointment()">Onayla</button>
+
+    <script>
+        function confirmAppointment() {
+            alert('Randevunuz onaylandı!');
+            document.querySelector('.header').innerHTML = '<h1>Randevu Bilgileri</h1>';
+            document.querySelector('.confirmation-box').innerHTML = `
+                <div class="appointment-details">
+                    <p><strong>Tarih:</strong> 01.01.2024</p>
+                    <p><strong>Saat:</strong> 10:00</p>
+                    <p><strong>Doktor:</strong> Dr. Ahmet Yılmaz</p>
+                    <p><strong>Poliklinik:</strong> Kardiyoloji</p>
+                </div>
+            `;
+            document.querySelector('.confirm-button').outerHTML = '<button class="cancel-button" onclick="cancelAppointment()">Randevuyu İptal Et</button>';
+        }
+
+        function cancelAppointment() {
+            alert('Randevunuz iptal edildi!');
+            document.querySelector('.cancel-button').outerHTML = '<div style="background-color: #dc3545; color: white; padding: 10px; border-radius: 5px; margin-top: 20px; font-weight: bold;">Randevunuz iptal edildi!</div>';
+        }
+    </script>
+</body>
+</html> 
