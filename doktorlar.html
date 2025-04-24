@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doktorlarımız - Sağlık Merkezi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo" onclick="window.location.href='index.html'">Sağlık Merkezi</div>
+            <ul>
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li><a href="randevu.html">Randevu Al</a></li>
+                <li><a href="doktorlar.html" class="active">Doktorlarımız</a></li>
+                <li><a href="iletisim.html">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="doktorlar-bolumu">
+            <h2>Doktorlarımız</h2>
+            
+            <div class="form-group">
+                <label for="bolum">Bölüm Seçiniz:</label>
+                <select id="bolum" onchange="doktorlariFiltrele()">
+                    <option value="tumbolumler">Tüm Bölümler</option>
+                    <option value="dahiliye">Dahiliye</option>
+                    <option value="kardiyoloji">Kardiyoloji</option>
+                    <option value="noroloji">Nöroloji</option>
+                    <option value="ortopedi">Ortopedi</option>
+                </select>
+            </div>
+
+            <div class="doktorlar-listesi">
+                <div class="doktor-kart" data-bolum="dahiliye">
+                    <div class="doktor-detay">
+                        <h3>Dr. Ahmet Yılmaz</h3>
+                        <p class="uzmanlik">Dahiliye Uzmanı</p>
+                        <div class="doktor-bilgi">
+                            <p><strong>Uzmanlık:</strong> İç Hastalıkları</p>
+                            <p><strong>Deneyim:</strong> 15 Yıl</p>
+                            <p><strong>Çalışma Günleri:</strong> Pazartesi - Çarşamba - Cuma</p>
+                            <p><strong>Çalışma Saatleri:</strong> 09:00 - 17:00</p>
+                        </div>
+                        <button onclick="window.location.href='index.html#randevu'" class="randevu-btn">Randevu Al</button>
+                    </div>
+                </div>
+
+                <div class="doktor-kart" data-bolum="kardiyoloji">
+                    <div class="doktor-detay">
+                        <h3>Dr. Mehmet Demir</h3>
+                        <p class="uzmanlik">Kardiyoloji Uzmanı</p>
+                        <div class="doktor-bilgi">
+                            <p><strong>Uzmanlık:</strong> Kalp ve Damar Hastalıkları</p>
+                            <p><strong>Deneyim:</strong> 20 Yıl</p>
+                            <p><strong>Çalışma Günleri:</strong> Salı - Perşembe</p>
+                            <p><strong>Çalışma Saatleri:</strong> 10:00 - 18:00</p>
+                        </div>
+                        <button onclick="window.location.href='index.html#randevu'" class="randevu-btn">Randevu Al</button>
+                    </div>
+                </div>
+
+                <div class="doktor-kart" data-bolum="noroloji">
+                    <div class="doktor-detay">
+                        <h3>Dr. Zeynep Çelik</h3>
+                        <p class="uzmanlik">Nöroloji Uzmanı</p>
+                        <div class="doktor-bilgi">
+                            <p><strong>Uzmanlık:</strong> Sinir Sistemi Hastalıkları</p>
+                            <p><strong>Deneyim:</strong> 12 Yıl</p>
+                            <p><strong>Çalışma Günleri:</strong> Pazartesi - Çarşamba - Cuma</p>
+                            <p><strong>Çalışma Saatleri:</strong> 09:00 - 16:00</p>
+                        </div>
+                        <button onclick="window.location.href='index.html#randevu'" class="randevu-btn">Randevu Al</button>
+                    </div>
+                </div>
+
+                <div class="doktor-kart" data-bolum="ortopedi">
+                    <div class="doktor-detay">
+                        <h3>Dr. Mustafa Aydın</h3>
+                        <p class="uzmanlik">Ortopedi Uzmanı</p>
+                        <div class="doktor-bilgi">
+                            <p><strong>Uzmanlık:</strong> Kas ve İskelet Sistemi</p>
+                            <p><strong>Deneyim:</strong> 18 Yıl</p>
+                            <p><strong>Çalışma Günleri:</strong> Salı - Perşembe - Cumartesi</p>
+                            <p><strong>Çalışma Saatleri:</strong> 09:00 - 17:00</p>
+                        </div>
+                        <button onclick="window.location.href='index.html#randevu'" class="randevu-btn">Randevu Al</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html> 

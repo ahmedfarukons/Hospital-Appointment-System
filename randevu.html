@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Randevu - Sağlık Merkezi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo" onclick="window.location.href='index.html'">Sağlık Merkezi</div>
+            <ul>
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li><a href="randevu.html" class="active">Randevu Al</a></li>
+                <li><a href="doktorlar.html">Doktorlarımız</a></li>
+                <li><a href="iletisim.html">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="randevu-bolumu">
+            <h2>Online Randevu Sistemi</h2>
+            
+            <div class="randevu-aciklama">
+                <p>Randevu almak için lütfen aşağıdaki formu doldurunuz. Randevunuz onaylandıktan sonra SMS ile bilgilendirileceksiniz.</p>
+            </div>
+
+            <form id="randevuForm">
+                <div class="form-group">
+                    <label for="ad">Ad Soyad:</label>
+                    <input type="text" id="ad" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tc">T.C. Kimlik No:</label>
+                    <input type="text" id="tc" maxlength="11" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="telefon">Telefon:</label>
+                    <input type="tel" id="telefon" pattern="[0-9]{10}" placeholder="5XX XXX XX XX" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-posta:</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="bolum">Bölüm Seçiniz:</label>
+                    <select id="bolum" required>
+                        <option value="">Seçiniz</option>
+                        <option value="dahiliye">Dahiliye</option>
+                        <option value="kardiyoloji">Kardiyoloji</option>
+                        <option value="noroloji">Nöroloji</option>
+                        <option value="ortopedi">Ortopedi</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="doktor">Doktor Seçiniz:</label>
+                    <select id="doktor" required>
+                        <option value="">Önce Bölüm Seçiniz</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tarih">Randevu Tarihi:</label>
+                    <input type="date" id="tarih" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="saat">Randevu Saati:</label>
+                    <select id="saat" required>
+                        <option value="">Seçiniz</option>
+                        <option value="09:00">09:00</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:00">11:00</option>
+                        <option value="11:30">11:30</option>
+                        <option value="13:30">13:30</option>
+                        <option value="14:00">14:00</option>
+                        <option value="14:30">14:30</option>
+                        <option value="15:00">15:00</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="sikayet">Şikayetiniz:</label>
+                    <textarea id="sikayet" rows="4" placeholder="Şikayetlerinizi kısaca belirtiniz..."></textarea>
+                </div>
+
+                <button type="submit">Randevu Oluştur</button>
+            </form>
+
+            <div class="randevu-bilgi">
+                <h3>Önemli Bilgiler</h3>
+                <ul>
+                    <li>Randevunuza zamanında gelmeye özen gösteriniz.</li>
+                    <li>Randevu saatinden 15 dakika önce hastanede olunuz.</li>
+                    <li>Randevunuzu iptal etmek için en az 24 saat önceden bilgi veriniz.</li>
+                    <li>Kimlik kartınızı yanınızda getirmeyi unutmayınız.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+</body>
+</html> 
