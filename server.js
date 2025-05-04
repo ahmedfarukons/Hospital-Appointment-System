@@ -18,6 +18,8 @@ connectDB();
 
 // Routes
 app.use('/api/doctors', require('./routes/doctors'));
+app.use('/api/appointments-mongo', require('./routes/appointments_mongo'));
+app.use('/api/users-mongo', require('./routes/user_mongo'));
 
 // Ana endpoint
 app.get('/api/health', (req, res) => {
