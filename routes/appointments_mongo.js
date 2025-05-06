@@ -45,10 +45,53 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// Yeni randevu ekle
+// Alınan saatleri döndür (yeni endpoint)
+router.get('/booked-times', async (req, res) => {
+    const { doctorId, appointmentDate } = req.query;
+    if (!doctorId || !appointmentDate) {
+        return res.status(400).json({ error: "Eksik parametre" });
+    }
+    const dateOnly = new Date(appointmentDate);
+    dateOnly.setHours(0, 0, 0, 0);
+
+    const appointments = await Appointment.find({
+        doctorId,
+        appointmentDate: dateOnly
+    });
+
+    // Sadece saatleri döndür
+    const times = appointments.map(a => a.appointmentTime);
+    res.json(times);
+});
+
+// Yeni randevu ekle (KESİN ÇAKIŞMA KONTROLÜ)
 router.post('/', async (req, res) => {
+    console.log("Gelen randevu isteği:", req.body); // <-- EKLE
     try {
-        const newAppointment = new Appointment(req.body);
+        const { doctorId, appointmentDate, appointmentTime } = req.body;
+
+        // Tarihi sadece yıl-ay-gün olarak normalize et
+        const dateOnly = new Date(appointmentDate);
+        dateOnly.setHours(0, 0, 0, 0);
+
+        // Aynı doktor, aynı gün ve aynı saatte randevu var mı kontrol et
+        const existing = await Appointment.findOne({
+            doctorId,
+            appointmentDate: dateOnly,
+            appointmentTime
+        });
+
+        if (existing) {
+            return res.status(400).json({ 
+                error: "Bu doktor için seçilen gün ve saatte zaten bir randevu var." 
+            });
+        }
+
+        // Yeni randevuyu oluştururken de tarihi normalize et
+        const newAppointment = new Appointment({
+            ...req.body,
+            appointmentDate: dateOnly
+        });
         const savedAppointment = await newAppointment.save();
         res.status(201).json(savedAppointment);
     } catch (err) {

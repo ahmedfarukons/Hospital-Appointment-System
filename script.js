@@ -1,4 +1,5 @@
 // === DOKTORLAR SAYFASI İÇİN ===
+console.log("Şu anki sayfa:", window.location.pathname);
 async function fetchDoctors() {
     try {
         const response = await fetch('http://localhost:3000/api/doctors');
@@ -9,7 +10,7 @@ async function fetchDoctors() {
         doctorListDiv.innerHTML = '';
 
         doctors.forEach(doctor => {
-            const bolum = doctor.specialty.toLowerCase();
+            const bolum = doctor.specialty ? doctor.specialty.toLowerCase() : '';
 
             const doctorCard = document.createElement('div');
             doctorCard.className = 'doktor-kart';
@@ -54,9 +55,13 @@ async function doktorlariGetirVeDoldur() {
     if (!bolumSelect || !doktorSelect) return;
 
     const seciliBolum = bolumSelect.value;
-    doktorSelect.innerHTML = '<option value="">Doktor Seçiniz</option>';
+    // Bölüm seçilmediyse, doktor select'i sıfırla ve mesajı göster
+    if (!seciliBolum) {
+        doktorSelect.innerHTML = '<option value="">Önce Bölüm Seçiniz</option>';
+        return;
+    }
 
-    if (!seciliBolum) return;
+    doktorSelect.innerHTML = '<option value="">Doktorlar yükleniyor...</option>';
 
     try {
         const response = await fetch('http://localhost:3000/api/doctors');
@@ -115,6 +120,9 @@ async function randevuOlustur(e) {
             if (doktorSelect) {
                 doktorSelect.innerHTML = '<option value="">Önce Bölüm Seçiniz</option>';
             }
+        } else if (response.status === 409 || (result && result.error && result.error.includes('zaten bir randevu var'))) {
+            // Backend 409 dönerse veya hata mesajında "zaten bir randevu var" geçiyorsa
+            alert('Bu doktor için seçilen gün ve saatte zaten bir randevu var. Lütfen başka bir saat seçiniz.');
         } else {
             alert('Hata: ' + (result.error || 'Randevu oluşturulamadı.'));
         }
@@ -149,4 +157,3 @@ document.addEventListener('DOMContentLoaded', function() {
         randevuForm.addEventListener('submit', randevuOlustur);
     }
 });
-
