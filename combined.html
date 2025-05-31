@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sağlık Merkezi - Tüm İçerikler</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo" onclick="window.location.href='index.html'">Sağlık Merkezi</div>
+            <ul>
+                <li><a href="#ana-sayfa">Ana Sayfa</a></li>
+                <li><a href="#randevu">Randevu Al</a></li>
+                <li><a href="#doktorlar">Doktorlarımız</a></li>
+                <li><a href="#hakkimizda">Hakkımızda</a></li>
+                <li><a href="#iletisim">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Ana Sayfa İçeriği -->
+        <section id="ana-sayfa">
+            <h2>Ana Sayfa</h2>
+            <!-- Include content from index.html -->
+            <div class="ana"><img src="resimler/sağlık.png" alt=""></div>
+            <div class="hero-content">
+                <img src="resimler/sağlık.png" alt="Logo">
+                <h1>Sağlığınız İçin Yanınızdayız</h1>
+                <p>Uzman kadromuz ve modern teknolojimizle kaliteli sağlık hizmeti sunuyoruz</p>
+                <button onclick="window.location.href='randevu.html'" class="cta-button">Hemen Randevu Al</button>
+            </div>
+        </section>
+
+        <!-- Randevu İçeriği -->
+        <section id="randevu">
+            <h2>Online Randevu Sistemi</h2>
+            <!-- Include content from randevu.html -->
+            <form id="randevuForm">
+                <div class="form-group">
+                    <label for="ad">Ad Soyad:</label>
+                    <input type="text" id="ad" required>
+                </div>
+                <div class="form-group">
+                    <label for="tc">T.C. Kimlik No:</label>
+                    <input type="text" id="tc" maxlength="11" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefon">Telefon:</label>
+                    <input type="tel" id="telefon" pattern="[0-9]{10}" placeholder="5XX XXX XX XX" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-posta:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="bolum">Bölüm Seçiniz:</label>
+                    <select id="bolum" required>
+                        <option value="">Seçiniz</option>
+                        <option value="dahiliye">Dahiliye</option>
+                        <option value="kardiyoloji">Kardiyoloji</option>
+                        <option value="noroloji">Nöroloji</option>
+                        <option value="ortopedi">Ortopedi</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="doktor">Doktor Seçiniz:</label>
+                    <select id="doktor" required>
+                        <option value="">Önce Bölüm Seçiniz</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tarih">Randevu Tarihi:</label>
+                    <input type="date" id="tarih" required>
+                </div>
+                <div class="form-group">
+                    <label for="saat">Randevu Saati:</label>
+                    <select id="saat" required>
+                        <option value="">Seçiniz</option>
+                        <option value="09:00">09:00</option>
+                        <option value="09:30">09:30</option>
+                        <option value="10:00">10:00</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:00">11:00</option>
+                        <option value="11:30">11:30</option>
+                        <option value="13:30">13:30</option>
+                        <option value="14:00">14:00</option>
+                        <option value="14:30">14:30</option>
+                        <option value="15:00">15:00</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sikayet">Şikayetiniz:</label>
+                    <textarea id="sikayet" rows="4" placeholder="Şikayetlerinizi kısaca belirtiniz..."></textarea>
+                </div>
+                <button type="submit">Randevu Oluştur</button>
+            </form>
+        </section>
+
+        <!-- Doktorlar İçeriği -->
+        <section id="doktorlar">
+            <h2>Doktorlarımız</h2>
+            <!-- Include content from doktorlar.html -->
+            <div class="doktorlar-listesi">
+                <div class="doktor-kart" data-bolum="dahiliye">
+                    <div class="doktor-detay">
+                        <h3>Dr. Ahmet Yılmaz</h3>
+                        <p class="uzmanlik">Dahiliye Uzmanı</p>
+                        <div class="doktor-bilgi">
+                            <p><strong>Uzmanlık:</strong> İç Hastalıkları</p>
+                            <p><strong>Deneyim:</strong> 15 Yıl</p>
+                            <p><strong>Çalışma Günleri:</strong> Pazartesi - Çarşamba - Cuma</p>
+                            <p><strong>Çalışma Saatleri:</strong> 09:00 - 17:00</p>
+                        </div>
+                        <button onclick="window.location.href='index.html#randevu'" class="randevu-btn">Randevu Al</button>
+                    </div>
+                </div>
+                <!-- Additional doctor cards here -->
+            </div>
+        </section>
+
+        <!-- Hakkımızda İçeriği -->
+        <section id="hakkimizda">
+            <h2>Hakkımızda</h2>
+            <!-- Include content from hakkımızda.html -->
+            <div class="hakkimizda-icerik">
+                <div class="vizyon-misyon">
+                    <div class="misyon">
+                        <h3>Misyonumuz</h3>
+                        <p>Sağlık Merkezimiz, toplumun sağlık ihtiyaçlarını en üst düzeyde karşılamak, modern tıbbi teknolojiler ve uzman kadromuzla kaliteli sağlık hizmeti sunmak için vardır.</p>
+                    </div>
+                    <div class="vizyon">
+                        <h3>Vizyonumuz</h3>
+                        <p>Sağlık sektöründe öncü, yenilikçi ve güvenilir bir kurum olarak, hasta memnuniyetini ön planda tutarak sürdürülebilir sağlık hizmeti sunmaktır.</p>
+                    </div>
+                </div>
+                <div class="tarihce">
+                    <h3>Tarihçemiz</h3>
+                    <p>2010 yılında kurulan merkezimiz, geçen 14 yıl içerisinde sürekli kendini yenileyerek ve geliştirerek bugünlere gelmiştir. Modern tıbbi cihazlarımız ve alanında uzman doktor kadromuzla, yılda binlerce hastaya şifa dağıtmaktayız.</p>
+                </div>
+                <div class="degerlerimiz">
+                    <h3>Değerlerimiz</h3>
+                    <ul>
+                        <li>Hasta odaklı yaklaşım</li>
+                        <li>Etik değerlere bağlılık</li>
+                        <li>Sürekli gelişim</li>
+                        <li>Kaliteli hizmet</li>
+                        <li>Güvenilirlik</li>
+                        <li>Şeffaflık</li>
+                    </ul>
+                </div>
+                <div class="kalite-politikamiz">
+                    <h3>Kalite Politikamız</h3>
+                    <p>Sağlık hizmetlerimizi uluslararası standartlarda sunmak, hasta güvenliğini ve memnuniyetini en üst düzeyde tutmak temel kalite politikamızdır. Sürekli eğitim ve gelişim ile hizmet kalitemizi her geçen gün daha da yükseltmekteyiz.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- İletişim İçeriği -->
+        <section id="iletisim">
+            <h2>İletişim Bilgileri</h2>
+            <!-- Include content from iletisim.html -->
+            <div class="iletisim-grid">
+                <div class="iletisim-bilgi">
+                    <h3>Adres Bilgilerimiz</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Atatürk Caddesi No:123</p>
+                    <p>Merkez Mahallesi</p>
+                    <p>34000 İstanbul/Türkiye</p>
+                </div>
+                <div class="iletisim-bilgi">
+                    <h3>İletişim Numaralarımız</h3>
+                    <p><i class="fas fa-phone"></i> Telefon: (0212) 555 55 55</p>
+                    <p><i class="fas fa-fax"></i> Faks: (0212) 555 55 56</p>
+                    <p><i class="fas fa-envelope"></i> E-posta: info@saglikmerkezi.com</p>
+                </div>
+                <div class="iletisim-bilgi">
+                    <h3>Çalışma Saatleri</h3>
+                    <p>Hafta içi: 08:00 - 20:00</p>
+                    <p>Cumartesi: 09:00 - 16:00</p>
+                    <p>Pazar: Kapalı</p>
+                </div>
+            </div>
+            <div class="iletisim-form">
+                <h3>Bize Ulaşın</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="ad">Ad Soyad:</label>
+                        <input type="text" id="ad" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-posta:</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="konu">Konu:</label>
+                        <select id="konu" required>
+                            <option value="">Seçiniz</option>
+                            <option value="randevu">Randevu Hakkında</option>
+                            <option value="bilgi">Bilgi Talebi</option>
+                            <option value="sikayet">Şikayet/Öneri</option>
+                            <option value="diger">Diğer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mesaj">Mesajınız:</label>
+                        <textarea id="mesaj" rows="5" required></textarea>
+                    </div>
+                    <button type="submit">Mesaj Gönder</button>
+                </form>
+            </div>
+            <div class="harita">
+                <h3>Konum Bilgimiz</h3>
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.1234567891011!2d28.12345678901234!3d41.12345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDA3JzM0LjQiTiAyOMKwMDcnMzQuNCJF!5e0!3m2!1str!2str!4v1234567890123!5m2!1str!2str" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html> 
