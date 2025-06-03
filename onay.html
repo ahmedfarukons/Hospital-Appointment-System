@@ -12,25 +12,27 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('https://empowerwomen.create.vista.com/tr/photos/doktor-arka-plan/');
-            background-size: cover;
-            background-position: center;
-            background-color: #add8e6;
+            background-color: white;
         }
         .header {
-            background-color: #007bff;
+            background-color: #ff0000;
             color: white;
             padding: 10px 20px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 0;
             text-align: center;
             font-size: 24px;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
-        .confirmation-box {
-            background-color: #fff;
-            padding: 30px;
+        .blue-box {
+            background-color: #add8e6;
+            color: black;
+            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 60px;
             text-align: center;
             font-size: 18px;
             width: 70%;
@@ -69,7 +71,7 @@
     <div class="header">
         <h1>Randevunuzu Onaylayın</h1>
     </div>
-    <div class="confirmation-box">
+    <div class="blue-box">
         <div class="appointment-details">
             <p><strong>Tarih:</strong> 01.01.2024</p>
             <p><strong>Saat:</strong> 10:00</p>
@@ -80,17 +82,45 @@
     <button class="confirm-button" onclick="confirmAppointment()">Onayla</button>
 
     <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                ad: params.get('ad'),
+                tc: params.get('tc'),
+                telefon: params.get('telefon'),
+                email: params.get('email'),
+                bolum: params.get('bolum'),
+                doktor: params.get('doktor'),
+                tarih: params.get('tarih'),
+                saat: params.get('saat'),
+                sikayet: params.get('sikayet')
+            };
+        }
+
+        function displayAppointmentDetails() {
+            const details = getQueryParams();
+            const appointmentInfo = `
+                <p><strong>Bölüm:</strong> ${details.bolum}</p>
+                <p><strong>Doktor:</strong> ${details.doktor}</p>
+                <p><strong>Tarih:</strong> ${details.tarih}</p>
+                <p><strong>Saat:</strong> ${details.saat}</p>
+            `;
+            document.querySelector('.appointment-details').innerHTML = appointmentInfo;
+            document.querySelector('.header').innerHTML = '<h1>Randevu Bilgileri</h1>';
+        }
+
+        document.addEventListener('DOMContentLoaded', displayAppointmentDetails);
+
         function confirmAppointment() {
             alert('Randevunuz onaylandı!');
-            document.querySelector('.header').innerHTML = '<h1>Randevu Bilgileri</h1>';
-            document.querySelector('.confirmation-box').innerHTML = `
-                <div class="appointment-details">
-                    <p><strong>Tarih:</strong> 01.01.2024</p>
-                    <p><strong>Saat:</strong> 10:00</p>
-                    <p><strong>Doktor:</strong> Dr. Ahmet Yılmaz</p>
-                    <p><strong>Poliklinik:</strong> Kardiyoloji</p>
-                </div>
+            const details = getQueryParams();
+            const appointmentInfo = `
+                <p><strong>Bölüm:</strong> ${details.bolum}</p>
+                <p><strong>Doktor:</strong> ${details.doktor}</p>
+                <p><strong>Tarih:</strong> ${details.tarih}</p>
+                <p><strong>Saat:</strong> ${details.saat}</p>
             `;
+            document.querySelector('.blue-box').innerHTML = appointmentInfo;
             document.querySelector('.confirm-button').outerHTML = '<button class="cancel-button" onclick="cancelAppointment()">Randevuyu İptal Et</button>';
         }
 
