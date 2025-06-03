@@ -6,8 +6,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 
-// MongoDB bağlantısı (buradaki bağlantı adresini kendi veritabanı adresinle değiştir)
-
+// MongoDB bağlantısı
 mongoose.connect('mongodb+srv://mmelihcaglayik:m3l1hc4gl4y1k@cluster0.wrtjzv6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
   .then(() => {
     console.log('MongoDB bağlantısı başarılı');
@@ -25,10 +24,10 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Routes
-app.use('/api/doctors', require('./routes/doctors'));
+app.use('/api/doctors', require('./routes/doctors_mongo'));
 app.use('/api/appointments-mongo', require('./routes/appointments_mongo'));
 app.use('/api/users-mongo', require('./routes/user_mongo'));
-app.use('/api/contact', require('./routes/contact')); // <-- İLETİŞİM ROUTE'U EKLENDİ
+app.use('/api/contact', require('./routes/contact'));
 
 // Ana endpoint
 app.get('/api/health', (req, res) => {

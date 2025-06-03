@@ -2,30 +2,27 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-// Appointment Model
+// Randevu Şeması
 const appointmentSchema = new mongoose.Schema({
     patientName: { type: String, required: true },
     patientEmail: { type: String, required: true },
     patientPhone: { type: String, required: true },
     doctorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Doctor', required: true },
-    appointmentDate: { type: Date, required: true },
-    appointmentTime: { type: String, required: true },
+    date: { type: Date, required: true },
+    time: { type: String, required: true },
     complaint: { type: String },
-    createdAt: { type: Date, default: Date.now }
+    status: { type: String, enum: ['pending', 'confirmed', 'cancelled'], default: 'pending' }
 });
 
-const Appointment = mongoose.model('AppointmentMongo', appointmentSchema);
+const Appointment = mongoose.model('Appointment', appointmentSchema);
 
 // Tüm randevuları getir
 router.get('/', async (req, res) => {
     try {
         const appointments = await Appointment.find().populate('doctorId');
         res.json(appointments);
-    } catch (err) {
-        res.status(500).json({ 
-            error: 'Randevular getirilirken bir hata oluştu',
-            details: err.message
-        });
+    } catch (error) {
+        res.status(500).json({ message: 'Randevular getirilirken bir hata oluştu' });
     }
 });
 
@@ -34,107 +31,80 @@ router.get('/:id', async (req, res) => {
     try {
         const appointment = await Appointment.findById(req.params.id).populate('doctorId');
         if (!appointment) {
-            return res.status(404).json({ error: 'Randevu bulunamadı' });
+            return res.status(404).json({ message: 'Randevu bulunamadı' });
         }
         res.json(appointment);
-    } catch (err) {
-        res.status(500).json({ 
-            error: 'Randevu getirilirken bir hata oluştu',
-            details: err.message
-        });
+    } catch (error) {
+        res.status(500).json({ message: 'Randevu getirilirken bir hata oluştu' });
     }
 });
 
-// Alınan saatleri döndür (yeni endpoint)
-router.get('/booked-times', async (req, res) => {
-    const { doctorId, appointmentDate } = req.query;
-    if (!doctorId || !appointmentDate) {
-        return res.status(400).json({ error: "Eksik parametre" });
-    }
-    const dateOnly = new Date(appointmentDate);
-    dateOnly.setHours(0, 0, 0, 0);
-
-    const appointments = await Appointment.find({
-        doctorId,
-        appointmentDate: dateOnly
-    });
-
-    // Sadece saatleri döndür
-    const times = appointments.map(a => a.appointmentTime);
-    res.json(times);
-});
-
-// Yeni randevu ekle (KESİN ÇAKIŞMA KONTROLÜ)
+// Yeni randevu oluştur
 router.post('/', async (req, res) => {
-    console.log("Gelen randevu isteği:", req.body); // <-- EKLE
     try {
-        const { doctorId, appointmentDate, appointmentTime } = req.body;
-
-        // Tarihi sadece yıl-ay-gün olarak normalize et
-        const dateOnly = new Date(appointmentDate);
-        dateOnly.setHours(0, 0, 0, 0);
-
-        // Aynı doktor, aynı gün ve aynı saatte randevu var mı kontrol et
-        const existing = await Appointment.findOne({
-            doctorId,
-            appointmentDate: dateOnly,
-            appointmentTime
+        // Aynı doktor, tarih ve saat için randevu kontrolü
+        const existingAppointment = await Appointment.findOne({
+            doctorId: req.body.doctorId,
+            date: req.body.date,
+            time: req.body.time,
+            status: { $ne: 'cancelled' }
         });
 
-        if (existing) {
-            return res.status(400).json({ 
-                error: "Bu doktor için seçilen gün ve saatte zaten bir randevu var." 
+        if (existingAppointment) {
+            return res.status(409).json({ 
+                error: 'Bu doktor için seçilen gün ve saatte zaten bir randevu var' 
             });
         }
 
-        // Yeni randevuyu oluştururken de tarihi normalize et
-        const newAppointment = new Appointment({
-            ...req.body,
-            appointmentDate: dateOnly
+        const appointment = new Appointment({
+            patientName: req.body.patientName,
+            patientEmail: req.body.patientEmail,
+            patientPhone: req.body.patientPhone,
+            doctorId: req.body.doctorId,
+            date: req.body.date,
+            time: req.body.time,
+            complaint: req.body.complaint
         });
-        const savedAppointment = await newAppointment.save();
-        res.status(201).json(savedAppointment);
-    } catch (err) {
-        res.status(500).json({ 
-            error: 'Randevu eklenirken bir hata oluştu',
-            details: err.message
+
+        const newAppointment = await appointment.save();
+        res.status(201).json(newAppointment);
+    } catch (error) {
+        console.error('Randevu oluşturma hatası:', error);
+        res.status(400).json({ 
+            message: 'Randevu oluşturulurken bir hata oluştu',
+            error: error.message 
         });
     }
 });
 
-// Randevu güncelle
-router.put('/:id', async (req, res) => {
+// Randevu durumunu güncelle
+router.patch('/:id', async (req, res) => {
     try {
-        const appointment = await Appointment.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
-        );
+        const appointment = await Appointment.findById(req.params.id);
         if (!appointment) {
-            return res.status(404).json({ error: 'Randevu bulunamadı' });
+            return res.status(404).json({ message: 'Randevu bulunamadı' });
         }
-        res.json(appointment);
-    } catch (err) {
-        res.status(500).json({ 
-            error: 'Randevu güncellenirken bir hata oluştu',
-            details: err.message
-        });
+
+        appointment.status = req.body.status;
+        const updatedAppointment = await appointment.save();
+        res.json(updatedAppointment);
+    } catch (error) {
+        res.status(400).json({ message: 'Randevu güncellenirken bir hata oluştu' });
     }
 });
 
 // Randevu sil
 router.delete('/:id', async (req, res) => {
     try {
-        const appointment = await Appointment.findByIdAndDelete(req.params.id);
+        const appointment = await Appointment.findById(req.params.id);
         if (!appointment) {
-            return res.status(404).json({ error: 'Randevu bulunamadı' });
+            return res.status(404).json({ message: 'Randevu bulunamadı' });
         }
+
+        await appointment.deleteOne();
         res.json({ message: 'Randevu başarıyla silindi' });
-    } catch (err) {
-        res.status(500).json({ 
-            error: 'Randevu silinirken bir hata oluştu',
-            details: err.message
-        });
+    } catch (error) {
+        res.status(500).json({ message: 'Randevu silinirken bir hata oluştu' });
     }
 });
 

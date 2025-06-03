@@ -16,37 +16,7 @@ function doktorlariFiltrele() {
 document.addEventListener('DOMContentLoaded', function() {
     const randevuForm = document.getElementById('randevuForm');
     if (randevuForm) {
-        randevuForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const formData = {
-                patientName: document.getElementById('ad').value,
-                patientEmail: document.getElementById('email').value,
-                patientPhone: document.getElementById('telefon').value,
-                doctorId: document.getElementById('doktor').value,
-                appointmentDate: document.getElementById('tarih').value,
-                appointmentTime: document.getElementById('saat').value,
-                complaint: document.getElementById('sikayet').value
-            };
-
-            try {
-                const response = await fetch('/api/appointments-mongo', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                });
-                const result = await response.json();
-                if (response.ok) {
-                    alert('Randevunuz başarıyla oluşturuldu!');
-                    randevuForm.reset();
-                } else {
-                    alert('Hata: ' + (result.error || 'Randevu oluşturulamadı.'));
-                }
-            } catch (error) {
-                console.error('Hata:', error);
-                alert('Bir hata oluştu: ' + error.message);
-            }
-        });
+        randevuForm.addEventListener('submit', randevuOlustur);
     }
 
     // Bölüm seçildiğinde doktorları dinamik olarak backend'den çek
@@ -177,3 +147,63 @@ window.addEventListener('load', function() {
         }, 3000);
     }
 });
+
+async function randevuOlustur(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const tarih = new Date(form.tarih.value);
+    const isoTarih = tarih.toISOString().split('T')[0];
+    
+    // Debug için form verilerini kontrol et
+    console.log('Form verileri:', {
+        ad: form.ad.value,
+        email: form.email.value,
+        telefon: form.telefon.value,
+        doktor: form.doktor.value,
+        tarih: isoTarih,
+        saat: form.saat.value,
+        sikayet: form.sikayet.value
+    });
+
+    const randevuBilgileri = {
+        patientName: form.ad.value,
+        patientEmail: form.email.value,
+        patientPhone: form.telefon.value,
+        doctorId: form.doktor.value,
+        date: isoTarih,
+        time: form.saat.value,
+        complaint: form.sikayet.value
+    };
+
+    // Debug için gönderilecek verileri kontrol et
+    console.log('Gönderilecek veriler:', randevuBilgileri);
+
+    try {
+        const response = await fetch('/api/appointments-mongo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(randevuBilgileri)
+        });
+
+        const result = await response.json();
+        console.log('Backend yanıtı:', result);
+
+        if (response.ok) {
+            alert('Randevunuz başarıyla oluşturuldu!');
+            form.reset();
+            // Doktor select'i tekrar başa al
+            const doktorSelect = document.getElementById('doktor');
+            if (doktorSelect) {
+                doktorSelect.innerHTML = '<option value="">Önce Bölüm Seçiniz</option>';
+            }
+        } else if (response.status === 409 || (result && result.error && result.error.includes('zaten bir randevu var'))) {
+            alert('Bu doktor için seçilen gün ve saatte zaten bir randevu var. Lütfen başka bir saat seçiniz.');
+        } else {
+            alert('Hata: ' + (result.error || 'Randevu oluşturulamadı.'));
+        }
+    } catch (error) {
+        console.error('Hata detayı:', error);
+        alert('Sunucu hatası: ' + error.message);
+    }
+}

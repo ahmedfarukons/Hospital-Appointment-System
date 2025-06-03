@@ -93,15 +93,30 @@ async function randevuOlustur(e) {
     e.preventDefault();
 
     const form = e.target;
+    
+    // Debug için form verilerini kontrol et
+    console.log('Form verileri:', {
+        ad: form.ad.value,
+        email: form.email.value,
+        telefon: form.telefon.value,
+        doktor: form.doktor.value,
+        tarih: form.tarih.value,
+        saat: form.saat.value,
+        sikayet: form.sikayet.value
+    });
+
     const randevuBilgileri = {
         patientName: form.ad.value,
         patientEmail: form.email.value,
         patientPhone: form.telefon.value,
         doctorId: form.doktor.value,
-        appointmentDate: form.tarih.value,
-        appointmentTime: form.saat.value,
+        date: isoTarih,
+        time: form.saat.value,
         complaint: form.sikayet.value
     };
+
+    // Debug için gönderilecek verileri kontrol et
+    console.log('Gönderilecek veriler:', randevuBilgileri);
 
     try {
         const response = await fetch('http://localhost:3000/api/appointments-mongo', {
@@ -111,6 +126,7 @@ async function randevuOlustur(e) {
         });
 
         const result = await response.json();
+        console.log('Backend yanıtı:', result);
 
         if (response.ok) {
             alert('Randevunuz başarıyla oluşturuldu!');
@@ -121,12 +137,12 @@ async function randevuOlustur(e) {
                 doktorSelect.innerHTML = '<option value="">Önce Bölüm Seçiniz</option>';
             }
         } else if (response.status === 409 || (result && result.error && result.error.includes('zaten bir randevu var'))) {
-            // Backend 409 dönerse veya hata mesajında "zaten bir randevu var" geçiyorsa
             alert('Bu doktor için seçilen gün ve saatte zaten bir randevu var. Lütfen başka bir saat seçiniz.');
         } else {
             alert('Hata: ' + (result.error || 'Randevu oluşturulamadı.'));
         }
     } catch (error) {
+        console.error('Hata detayı:', error);
         alert('Sunucu hatası: ' + error.message);
     }
 }
