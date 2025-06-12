@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Girişi / Kaydı</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <section>
+            <h2>Kullanıcı Kaydı</h2>
+            <form id="registerForm">
+                <input type="text" id="reg-username" placeholder="Kullanıcı Adı" required>
+                <input type="email" id="reg-email" placeholder="E-posta" required>
+                <input type="password" id="reg-password" placeholder="Şifre" required>
+                <button type="submit">Kayıt Ol</button>
+            </form>
+            <div id="registerResult"></div>
+        </section>
+        <section>
+            <h2>Kullanıcı Girişi</h2>
+            <form id="loginForm">
+                <input type="email" id="login-email" placeholder="E-posta" required>
+                <input type="password" id="login-password" placeholder="Şifre" required>
+                <button type="submit">Giriş Yap</button>
+            </form>
+            <div id="loginResult"></div>
+        </section>
+    </main>
+    <script src="user.js"></script>
+</body>
+</html>

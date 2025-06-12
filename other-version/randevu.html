@@ -1,3 +1,4 @@
+<<<<<<< HEAD:other-version/randevu.html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -131,3 +132,73 @@
     </script>
 </body>
 </html> 
+=======
+<form id="randevuForm">
+    <div class="form-group">
+        <label for="ad">Ad Soyad:</label>
+        <input type="text" id="ad" name="ad" required>
+    </div>
+
+    <div class="form-group">
+        <label for="tc">T.C. Kimlik No:</label>
+        <input type="text" id="tc" name="tc" maxlength="11" required>
+    </div>
+
+    <div class="form-group">
+        <label for="telefon">Telefon:</label>
+        <input type="tel" id="telefon" name="telefon" pattern="[0-9]{10}" placeholder="5XX XXX XX XX" required>
+    </div>
+
+    <div class="form-group">
+        <label for="email">E-posta:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+
+    <div class="form-group">
+        <label for="bolum">Bölüm Seçiniz:</label>
+        <select id="bolum" name="bolum" required>
+            <option value="">Seçiniz</option>
+            <option value="dahiliye">Dahiliye</option>
+            <option value="kardiyoloji">Kardiyoloji</option>
+            <option value="noroloji">Nöroloji</option>
+            <option value="ortopedi">Ortopedi</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="doktor">Doktor Seçiniz:</label>
+        <select id="doktor" name="doktor" required>
+            <option value="">Önce Bölüm Seçiniz</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="tarih">Randevu Tarihi:</label>
+        <input type="date" id="tarih" name="tarih" required>
+    </div>
+
+    <div class="form-group">
+        <label for="saat">Randevu Saati:</label>
+        <select id="saat" name="saat" required>
+            <option value="">Seçiniz</option>
+            <option value="09:00">09:00</option>
+            <option value="09:30">09:30</option>
+            <option value="10:00">10:00</option>
+            <option value="10:30">10:30</option>
+            <option value="11:00">11:00</option>
+            <option value="11:30">11:30</option>
+            <option value="13:30">13:30</option>
+            <option value="14:00">14:00</option>
+            <option value="14:30">14:30</option>
+            <option value="15:00">15:00</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="sikayet">Şikayetiniz:</label>
+        <textarea id="sikayet" name="sikayet" rows="4" placeholder="Şikayetlerinizi kısaca belirtiniz..."></textarea>
+    </div>
+
+    <button type="submit">Randevu Oluştur</button>
+</form>
+>>>>>>> mmelih:randevu.html
