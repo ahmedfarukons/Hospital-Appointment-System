@@ -55,18 +55,27 @@ nav ul li a.active {
 }
 
 .user-button {
-    background-color: #ffffff;
-    color: #da0000;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
     text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
+    margin-left: 10px;
+    display: inline-block;
 }
 
 .user-button:hover {
-    background-color: #f0f0f0;
-    transform: translateY(-2px);
+    background-color: #0056b3;
+}
+
+#randevularim-btn {
+    background-color: #28a745;
+}
+
+#randevularim-btn:hover {
+    background-color: #218838;
 }
 
 main {

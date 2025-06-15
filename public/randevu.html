@@ -109,6 +109,7 @@
                 <li><a href="iletisim.html">İletişim</a></li>
             </ul>
             <div id="user-status-container">
+                <a href="dashboard.html" class="user-button" id="randevularim-btn" style="display: none;">Randevularım</a>
                 <a href="user.html" class="user-button">Kullanıcı Girişi</a>
             </div>
         </nav>
@@ -128,7 +129,7 @@
                     <p>Randevu almak için lütfen aşağıdaki formu doldurunuz. Randevunuz onaylandıktan sonra SMS ile bilgilendirileceksiniz.</p>
                 </div>
 
-                <form id="randevuForm">
+                <form id="randevuForm" onsubmit="randevuOlustur(event)">
                     <div class="form-group">
                         <label for="ad">Ad Soyad</label>
                         <input type="text" id="ad" name="ad" required>
@@ -143,7 +144,7 @@
                     </div>
                     <div class="form-group">
                         <label for="bolum">Bölüm Seçiniz:</label>
-                        <select id="bolum" required>
+                        <select id="bolum" name="bolum" required>
                             <option value="">Seçiniz</option>
                             <option value="dahiliye">Dahiliye</option>
                             <option value="kardiyoloji">Kardiyoloji</option>
@@ -153,7 +154,7 @@
                     </div>
                     <div class="form-group">
                         <label for="doktor">Doktor Seçiniz:</label>
-                        <select id="doktor" required>
+                        <select id="doktor" name="doktor" required>
                             <option value="">Önce Bölüm Seçiniz</option>
                         </select>
                     </div>
@@ -164,7 +165,17 @@
                     <div class="form-group">
                         <label for="saat">Randevu Saati:</label>
                         <select id="saat" name="saat" required>
-                            <option value="">Seçiniz</option>
+                            <option value="">Saat Seçiniz</option>
+                            <option value="09:00">09:00</option>
+                            <option value="09:30">09:30</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:30">10:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:30">11:30</option>
+                            <option value="13:30">13:30</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:30">14:30</option>
+                            <option value="15:00">15:00</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -244,6 +255,19 @@
                         console.error('Doktor bilgileri yüklenirken hata:', error);
                         alert('Doktor bilgileri yüklenirken bir hata oluştu.');
                     });
+            }
+
+            // Bugünün tarihini al
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const minDate = `${yyyy}-${mm}-${dd}`;
+
+            // Tarih inputuna minimum değer ata
+            const tarihInput = document.getElementById('tarih');
+            if (tarihInput) {
+                tarihInput.min = minDate;
             }
         });
     </script>

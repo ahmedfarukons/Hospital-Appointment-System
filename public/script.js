@@ -28,7 +28,7 @@ async function login(email, password) {
         
         // 2 saniye sonra yönlendir
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = 'dashboard.html';
         }, 2000);
     } catch (error) {
         console.error('Login error:', error);
@@ -66,7 +66,7 @@ async function register(name, email, password, phone) {
         
         // 2 saniye sonra yönlendir
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = 'dashboard.html';
         }, 2000);
     } catch (error) {
         console.error('Register error:', error);
@@ -214,31 +214,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const doktorSelect = document.getElementById('doktor');
         
         if (bolumSelect && doktorSelect) {
-            bolumSelect.addEventListener('change', async () => {
-                const seciliBolum = bolumSelect.value;
-                if (!seciliBolum) {
-                    doktorSelect.innerHTML = '<option value="">Önce Bölüm Seçiniz</option>';
-                    return;
-                }
+            bolumSelect.addEventListener('change', async function() {
+                const seciliBolum = this.value;
+                doktorSelect.innerHTML = '<option value="">Doktor Seçiniz</option>';
 
-                try {
-                    const response = await fetch(`${API_BASE_URL}/doctors`);
-                    const doctors = await response.json();
-                    
-                    const uygunDoktorlar = doctors.filter(
-                        doktor => doktor.specialization.toLowerCase() === seciliBolum.toLowerCase()
-                    );
+                if (seciliBolum) {
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/doctors`);
+                        const doctors = await response.json();
+                        
+                        const uygunDoktorlar = doctors.filter(
+                            doktor => doktor.specialization.toLowerCase() === seciliBolum.toLowerCase()
+                        );
 
-                    doktorSelect.innerHTML = '<option value="">Doktor Seçiniz</option>';
-                    uygunDoktorlar.forEach(doktor => {
-                        const option = document.createElement('option');
-                        option.value = doktor._id;
-                        option.textContent = `Dr. ${doktor.name}`;
-                        doktorSelect.appendChild(option);
-                    });
-                } catch (error) {
-                    console.error('Doktorlar yüklenirken hata:', error);
-                    doktorSelect.innerHTML = '<option value="">Doktorlar yüklenemedi</option>';
+                        uygunDoktorlar.forEach(doktor => {
+                            const option = document.createElement('option');
+                            option.value = doktor._id;
+                            option.textContent = `Dr. ${doktor.name}`;
+                            doktorSelect.appendChild(option);
+                        });
+                    } catch (error) {
+                        console.error('Doktorlar yüklenirken hata:', error);
+                        doktorSelect.innerHTML = '<option value="">Doktorlar yüklenemedi</option>';
+                    }
                 }
             });
         }
@@ -246,22 +244,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Kullanıcı durumunu güncelle
     updateUserStatus();
+    updateWelcomeMessage();
 });
 
 // Kullanıcı durumunu güncelleme
 function updateUserStatus() {
-    const user = JSON.parse(localStorage.getItem('user'));
     const userStatusContainer = document.getElementById('user-status-container');
-    
-    if (userStatusContainer) {
-        if (user && user.name) {
-            userStatusContainer.innerHTML = `
-                <span style="color: white; margin-right: 10px;">Merhaba, ${user.name}</span>
-                <button onclick="logout()" style="background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">Çıkış Yap</button>
-            `;
-        } else {
-            userStatusContainer.innerHTML = `<a href="user.html" class="user-button">Kullanıcı Girişi</a>`;
-        }
+    const randevularimBtn = document.getElementById('randevularim-btn');
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem('token');
+
+    if (user && token) {
+        userStatusContainer.innerHTML = `
+            <a href="dashboard.html" class="user-button" id="randevularim-btn">Randevularım</a>
+            <button onclick="logout()" class="user-button">Çıkış Yap</button>
+        `;
+    } else {
+        userStatusContainer.innerHTML = `
+            <a href="user.html" class="user-button">Kullanıcı Girişi</a>
+        `;
     }
 }
 
@@ -283,57 +284,56 @@ function toggleAppointmentForm(button) {
     }
 }
 
-document.addEventListener('click', async (e) => {
-    if (e.target.classList.contains('randevu-olustur-btn')) {
-        const doctorId = e.target.dataset.doctorId;
-        const doctorCard = e.target.closest('.doktor-kart');
-        const selectedTime = doctorCard.querySelector('.time-select').value;
-        const complaint = doctorCard.querySelector('.sikayet-input').value;
-
-        // Get user ID from localStorage
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (!user || !user._id) {
-            alert('Randevu oluşturmak için giriş yapmalısınız.');
-            window.location.href = 'user.html'; // Redirect to login page
-            return;
-        }
-        const userId = user._id;
-
-        // You'll need a date for the appointment. For now, let's use a dummy date or get it from another input if available.
-        // If there's no date picker on the doctor's page, you might need to add one or assume a date.
-        const appointmentDate = new Date().toISOString().split('T')[0]; // Current date as YYYY-MM-DD
-
-        try {
-            const response = await fetch(`${API_BASE_URL}/appointments-mongo`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({ 
-                    userId: userId, 
-                    doctorId: doctorId, 
-                    date: appointmentDate, 
-                    time: selectedTime, 
-                    complaint: complaint 
-                })
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || 'Randevu oluşturulamadı');
-            }
-
-            alert('Randevu başarıyla oluşturuldu!');
-            // Optionally, hide the form or update the UI after successful appointment
-            toggleAppointmentForm(doctorCard.querySelector('.randevu-btn')); // Hide the form
-        } catch (error) {
-            console.error('Randevu oluşturulurken hata:', error);
-            alert(error.message);
-        }
+async function randevuOlustur(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const formData = new FormData(form);
+    
+    // Kullanıcı kontrolü
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+        alert('Randevu almak için giriş yapmalısınız!');
+        window.location.href = 'user.html';
+        return;
     }
-});
+
+    const randevuBilgileri = {
+        patientName: user.name,
+        patientEmail: user.email,
+        patientPhone: formData.get('telefon'),
+        doctorId: formData.get('doktor'),
+        date: formData.get('tarih'),
+        time: formData.get('saat'),
+        complaint: formData.get('sikayet'),
+        status: 'pending'
+    };
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/appointments-mongo`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(randevuBilgileri)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert('Randevunuz başarıyla oluşturuldu!');
+            window.location.href = 'dashboard.html';
+        } else if (response.status === 409) {
+            alert('Bu doktor için seçilen gün ve saatte zaten bir randevu var. Lütfen başka bir saat seçiniz.');
+        } else {
+            alert('Hata: ' + (result.error || 'Randevu oluşturulamadı.'));
+        }
+    } catch (error) {
+        console.error('Hata detayı:', error);
+        alert('Sunucu hatası: ' + error.message);
+    }
+}
 
 // Doktorları filtreleme fonksiyonu
 function doktorlariFiltrele() {
@@ -348,3 +348,36 @@ function doktorlariFiltrele() {
         }
     });
 }
+
+// Ana sayfa hoşgeldin mesajını güncelle
+function updateWelcomeMessage() {
+    const welcomeText = document.getElementById('welcome-text');
+    if (welcomeText) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.name) {
+            welcomeText.textContent = `Hoşgeldin ${user.name}`;
+        } else {
+            welcomeText.textContent = 'Hoşgeldiniz';
+        }
+    }
+}
+
+// Bölümlere göre doktor listesi
+const doktorlar = {
+    dahiliye: [
+        { id: '65f1a2b3c4d5e6f7g8h9i0j1', name: 'Dr. Ahmet Yılmaz' },
+        { id: '65f1a2b3c4d5e6f7g8h9i0j2', name: 'Dr. Ayşe Kaya' }
+    ],
+    kardiyoloji: [
+        { id: '65f1a2b3c4d5e6f7g8h9i0j3', name: 'Dr. Mehmet Demir' },
+        { id: '65f1a2b3c4d5e6f7g8h9i0j4', name: 'Dr. Fatma Şahin' }
+    ],
+    noroloji: [
+        { id: '65f1a2b3c4d5e6f7g8h9i0j5', name: 'Dr. Ali Öztürk' },
+        { id: '65f1a2b3c4d5e6f7g8h9i0j6', name: 'Dr. Zeynep Çelik' }
+    ],
+    ortopedi: [
+        { id: '65f1a2b3c4d5e6f7g8h9i0j7', name: 'Dr. Mustafa Aydın' },
+        { id: '65f1a2b3c4d5e6f7g8h9i0j8', name: 'Dr. Elif Yıldız' }
+    ]
+};

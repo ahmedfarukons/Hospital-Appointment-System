@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sağlık Merkezi - Ana Sayfa</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .welcome-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: #2c2c2c;
+            margin-bottom: 30px;
+        }
+        .welcome-section h1 {
+            color: #f5f5f5;
+            margin-bottom: 15px;
+        }
+        .welcome-section p {
+            color: #f5f5f5;
+            font-size: 1.1em;
+        }
+    </style>
 </head>
 <body>
     <div class="geri">
@@ -18,10 +34,16 @@
                     <li><a href="iletisim.html">İletişim</a></li>
                 </ul>
                 <div id="user-status-container">
+                    <a href="dashboard.html" class="user-button" id="randevularim-btn" style="display: none;">Randevularım</a>
                     <a href="user.html" class="user-button">Kullanıcı Girişi</a>
                 </div>
             </nav>
         </header>
+    
+        <div class="welcome-section">
+            <h1 id="welcome-text">Hoşgeldiniz</h1>
+            <p>Sağlık Merkezimize hoş geldiniz. Size nasıl yardımcı olabiliriz?</p>
+        </div>
     
         <main>
             <!-- Hero Bölümü -->
