@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="ana"><img src="resimler/sağlık.png" alt=""></div>
-
     <div class="geri">
         <header>
             <nav>
@@ -18,8 +16,10 @@
                     <li><a href="randevu.html">Randevu Al</a></li>
                     <li><a href="doktorlar.html">Doktorlarımız</a></li>
                     <li><a href="iletisim.html">İletişim</a></li>
-                    <li><a href="user.html">Kullanıcı</a></li>
                 </ul>
+                <div id="user-status-container">
+                    <a href="user.html" class="user-button">Kullanıcı Girişi</a>
+                </div>
             </nav>
         </header>
     
@@ -27,7 +27,7 @@
             <!-- Hero Bölümü -->
             <section id="hero">
                 <div class="hero-content">
-                    <img src="resimler/sağlık.png" alt="Logo">
+                    <img src="resimler/sağlık.png" alt="Logo" class="hero-logo">
                     <h1>Sağlığınız İçin Yanınızdayız</h1>
                     <p>Uzman kadromuz ve modern teknolojimizle kaliteli sağlık hizmeti sunuyoruz</p>
                     <button onclick="window.location.href='randevu.html'" class="cta-button">Hemen Randevu Al</button>
@@ -39,22 +39,30 @@
                 <h2>Hizmetlerimiz</h2>
                 <div class="hizmet-kartlari">
                     <div class="hizmet-kart">
-                        <img src="resimler/avrasya_hospital_dahiliye.jpg" alt="Dahiliye">
+                        <div class="hizmet-resim">
+                            <img src="resimler/avrasya_hospital_dahiliye.jpg" alt="Dahiliye">
+                        </div>
                         <h3>Dahiliye</h3>
                         <p>İç hastalıkları alanında uzman kadromuzla hizmetinizdeyiz.</p>
                     </div>
                     <div class="hizmet-kart">
-                        <img src="resimler/Front-view-doctor-holding-medical-element-7193_h1200.jpg" alt="Kardiyoloji">
+                        <div class="hizmet-resim">
+                            <img src="resimler/Front-view-doctor-holding-medical-element-7193_h1200.jpg" alt="Kardiyoloji">
+                        </div>
                         <h3>Kardiyoloji</h3>
                         <p>Kalp sağlığınız için modern teknolojik imkanlarla yanınızdayız.</p>
                     </div>
                     <div class="hizmet-kart">
-                        <img src="resimler/Noroloji.jpg" alt="Nöroloji">
+                        <div class="hizmet-resim">
+                            <img src="resimler/Noroloji.jpg" alt="Nöroloji">
+                        </div>
                         <h3>Nöroloji</h3>
                         <p>Sinir sistemi hastalıklarında deneyimli uzman kadromuz.</p>
                     </div>
                     <div class="hizmet-kart">
-                        <img src="resimler/Ortopedi-ve-Travmatoloji.jpg" alt="Ortopedi">
+                        <div class="hizmet-resim">
+                            <img src="resimler/Ortopedi-ve-Travmatoloji.jpg" alt="Ortopedi">
+                        </div>
                         <h3>Ortopedi</h3>
                         <p>Kas ve iskelet sistemi rahatsızlıklarında uzman tedavi.</p>
                     </div>
@@ -66,17 +74,23 @@
                 <h2>Neden Bizi Seçmelisiniz?</h2>
                 <div class="ozellikler">
                     <div class="ozellik">
-                        <img src="resimler/34-ilde-doktor-kadrolari-bos-kaldi-9047.jpg" alt="Uzman Kadro">
+                        <div class="ozellik-resim">
+                            <img src="resimler/34-ilde-doktor-kadrolari-bos-kaldi-9047.jpg" alt="Uzman Kadro">
+                        </div>
                         <h3>Uzman Kadro</h3>
                         <p>Alanında uzman ve deneyimli doktor kadromuz</p>
                     </div>
                     <div class="ozellik">
-                        <img src="resimler/modern-technologies-in-healthcare-AI.jpg.webp" alt="Modern Teknoloji">
+                        <div class="ozellik-resim">
+                            <img src="resimler/modern-technologies-in-healthcare-AI.jpg.webp" alt="Modern Teknoloji">
+                        </div>
                         <h3>Modern Teknoloji</h3>
                         <p>En son teknolojik tıbbi cihazlar</p>
                     </div>
                     <div class="ozellik">
-                        <img src="resimler/hiyjen.jpg" alt="Hijyenik Ortam">
+                        <div class="ozellik-resim">
+                            <img src="resimler/hiyjen.jpg" alt="Hijyenik Ortam">
+                        </div>
                         <h3>Hijyenik Ortam</h3>
                         <p>Steril ve güvenli tedavi ortamı</p>
                     </div>

@@ -3,31 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kullanıcı Girişi / Kaydı</title>
+    <title>Kullanıcı İşlemleri - Sağlık Merkezi</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <nav>
+            <div class="logo" onclick="window.location.href='index.html'">Sağlık Merkezi</div>
+            <ul>
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li><a href="randevu.html">Randevu Al</a></li>
+                <li><a href="doktorlar.html">Doktorlarımız</a></li>
+                <li><a href="iletisim.html">İletişim</a></li>
+            </ul>
+            <div id="user-status-container">
+                <a href="user.html" class="user-button">Kullanıcı Girişi</a>
+            </div>
+        </nav>
+    </header>
+
     <main>
-        <section>
-            <h2>Kullanıcı Kaydı</h2>
-            <form id="registerForm">
-                <input type="text" id="reg-username" placeholder="Kullanıcı Adı" required>
-                <input type="email" id="reg-email" placeholder="E-posta" required>
-                <input type="password" id="reg-password" placeholder="Şifre" required>
-                <button type="submit">Kayıt Ol</button>
+        <div class="form-container">
+            <div class="auth-tabs">
+                <button id="loginTab" class="tab-button active">Giriş Yap</button>
+                <button id="registerTab" class="tab-button">Kayıt Ol</button>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <h2>Giriş Yap</h2>
+                <div class="form-group">
+                    <label for="loginEmail">E-posta</label>
+                    <input type="email" id="loginEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Şifre</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                <div id="loginMessage" class="message" style="display: none;"></div>
+                <button type="submit" class="btn">Giriş Yap</button>
             </form>
-            <div id="registerResult"></div>
-        </section>
-        <section>
-            <h2>Kullanıcı Girişi</h2>
-            <form id="loginForm">
-                <input type="email" id="login-email" placeholder="E-posta" required>
-                <input type="password" id="login-password" placeholder="Şifre" required>
-                <button type="submit">Giriş Yap</button>
+
+            <form id="registerForm" class="auth-form" style="display: none;">
+                <h2>Kayıt Ol</h2>
+                <div class="form-group">
+                    <label for="registerName">Ad Soyad</label>
+                    <input type="text" id="registerName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">E-posta</label>
+                    <input type="email" id="registerEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Şifre</label>
+                    <input type="password" id="registerPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">Telefon (İsteğe bağlı)</label>
+                    <input type="tel" id="registerPhone" name="phone">
+                </div>
+                <div id="registerMessage" class="message" style="display: none;"></div>
+                <button type="submit" class="btn">Kayıt Ol</button>
             </form>
-            <div id="loginResult"></div>
-        </section>
+        </div>
     </main>
-    <script src="user.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>

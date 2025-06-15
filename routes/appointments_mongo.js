@@ -14,7 +14,7 @@ const appointmentSchema = new mongoose.Schema({
     status: { type: String, enum: ['pending', 'confirmed', 'cancelled'], default: 'pending' }
 });
 
-const Appointment = mongoose.model('Appointment', appointmentSchema);
+const Appointment = mongoose.model('Appointment', appointmentSchema, 'randevu');
 
 // Tüm randevuları getir
 router.get('/', async (req, res) => {
@@ -36,6 +36,16 @@ router.get('/:id', async (req, res) => {
         res.json(appointment);
     } catch (error) {
         res.status(500).json({ message: 'Randevu getirilirken bir hata oluştu' });
+    }
+});
+
+// Kullanıcının randevularını e-postaya göre getir
+router.get('/user/:email', async (req, res) => {
+    try {
+        const appointments = await Appointment.find({ patientEmail: req.params.email }).populate('doctorId');
+        res.json(appointments);
+    } catch (error) {
+        res.status(500).json({ message: 'Kullanıcının randevuları getirilirken bir hata oluştu' });
     }
 });
 

@@ -5,6 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Randevu - Sağlık Merkezi</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        #randevu-bolumu {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .randevu-aciklama {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .randevu-bilgi {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .randevu-bilgi ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .randevu-bilgi li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .randevu-bilgi li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #007bff;
+        }
+        .auth-required {
+            text-align: center;
+            padding: 40px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .auth-required h3 {
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+        .auth-required a {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .auth-required a:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -16,6 +108,9 @@
                 <li><a href="doktorlar.html">Doktorlarımız</a></li>
                 <li><a href="iletisim.html">İletişim</a></li>
             </ul>
+            <div id="user-status-container">
+                <a href="user.html" class="user-button">Kullanıcı Girişi</a>
+            </div>
         </nav>
     </header>
 
@@ -23,90 +118,134 @@
         <section id="randevu-bolumu">
             <h2>Online Randevu Sistemi</h2>
             
-            <div class="randevu-aciklama">
-                <p>Randevu almak için lütfen aşağıdaki formu doldurunuz. Randevunuz onaylandıktan sonra SMS ile bilgilendirileceksiniz.</p>
+            <div id="auth-required-message" class="auth-required" style="display: none;">
+                <h3>Randevu almak için giriş yapmanız gerekmektedir</h3>
+                <a href="user.html">Giriş Yap</a>
             </div>
 
-            <form id="randevuForm">
-                <div class="form-group">
-                    <label for="ad">Ad Soyad:</label>
-                    <input type="text" id="ad" required>
+            <div id="randevu-form-container">
+                <div class="randevu-aciklama">
+                    <p>Randevu almak için lütfen aşağıdaki formu doldurunuz. Randevunuz onaylandıktan sonra SMS ile bilgilendirileceksiniz.</p>
                 </div>
 
-                <div class="form-group">
-                    <label for="tc">T.C. Kimlik No:</label>
-                    <input type="text" id="tc" maxlength="11" required>
+                <form id="randevuForm">
+                    <div class="form-group">
+                        <label for="ad">Ad Soyad</label>
+                        <input type="text" id="ad" name="ad" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-posta</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefon">Telefon</label>
+                        <input type="tel" id="telefon" name="telefon" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bolum">Bölüm Seçiniz:</label>
+                        <select id="bolum" required>
+                            <option value="">Seçiniz</option>
+                            <option value="dahiliye">Dahiliye</option>
+                            <option value="kardiyoloji">Kardiyoloji</option>
+                            <option value="noroloji">Nöroloji</option>
+                            <option value="ortopedi">Ortopedi</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="doktor">Doktor Seçiniz:</label>
+                        <select id="doktor" required>
+                            <option value="">Önce Bölüm Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tarih">Randevu Tarihi:</label>
+                        <input type="date" id="tarih" name="tarih" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="saat">Randevu Saati:</label>
+                        <select id="saat" name="saat" required>
+                            <option value="">Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sikayet">Şikayetiniz:</label>
+                        <textarea id="sikayet" name="sikayet" rows="4" placeholder="Şikayetlerinizi kısaca belirtiniz..."></textarea>
+                    </div>
+                    <button type="submit">Randevu Oluştur</button>
+                </form>
+
+                <div class="randevu-bilgi">
+                    <h3>Önemli Bilgiler</h3>
+                    <ul>
+                        <li>Randevunuza zamanında gelmeye özen gösteriniz.</li>
+                        <li>Randevu saatinden 15 dakika önce hastanede olunuz.</li>
+                        <li>Randevunuzu iptal etmek için en az 24 saat önceden bilgi veriniz.</li>
+                        <li>Kimlik kartınızı yanınızda getirmeyi unutmayınız.</li>
+                    </ul>
                 </div>
-
-                <div class="form-group">
-                    <label for="telefon">Telefon:</label>
-                    <input type="tel" id="telefon" pattern="[0-9]{10}" placeholder="5XX XXX XX XX" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">E-posta:</label>
-                    <input type="email" id="email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="bolum">Bölüm Seçiniz:</label>
-                    <select id="bolum" required>
-                        <option value="">Seçiniz</option>
-                        <option value="dahiliye">Dahiliye</option>
-                        <option value="kardiyoloji">Kardiyoloji</option>
-                        <option value="noroloji">Nöroloji</option>
-                        <option value="ortopedi">Ortopedi</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="doktor">Doktor Seçiniz:</label>
-                    <select id="doktor" required>
-                        <option value="">Önce Bölüm Seçiniz</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="tarih">Randevu Tarihi:</label>
-                    <input type="date" id="tarih" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="saat">Randevu Saati:</label>
-                    <select id="saat" required>
-                        <option value="">Seçiniz</option>
-                        <option value="09:00">09:00</option>
-                        <option value="09:30">09:30</option>
-                        <option value="10:00">10:00</option>
-                        <option value="10:30">10:30</option>
-                        <option value="11:00">11:00</option>
-                        <option value="11:30">11:30</option>
-                        <option value="13:30">13:30</option>
-                        <option value="14:00">14:00</option>
-                        <option value="14:30">14:30</option>
-                        <option value="15:00">15:00</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="sikayet">Şikayetiniz:</label>
-                    <textarea id="sikayet" rows="4" placeholder="Şikayetlerinizi kısaca belirtiniz..."></textarea>
-                </div>
-
-                <button type="submit">Randevu Oluştur</button>
-            </form>
-
-            <div class="randevu-bilgi">
-                <h3>Önemli Bilgiler</h3>
-                <ul>
-                    <li>Randevunuza zamanında gelmeye özen gösteriniz.</li>
-                    <li>Randevu saatinden 15 dakika önce hastanede olunuz.</li>
-                    <li>Randevunuzu iptal etmek için en az 24 saat önceden bilgi veriniz.</li>
-                    <li>Kimlik kartınızı yanınızda getirmeyi unutmayınız.</li>
-                </ul>
             </div>
         </section>
     </main>
+
     <script src="script.js"></script>
+    <script>
+        // Kullanıcı durumunu kontrol et ve formu göster/gizle
+        function checkAuthAndUpdateUI() {
+            const token = localStorage.getItem('token');
+            const user = JSON.parse(localStorage.getItem('user'));
+            const authRequiredMessage = document.getElementById('auth-required-message');
+            const randevuFormContainer = document.getElementById('randevu-form-container');
+            const userStatusContainer = document.getElementById('user-status-container');
+
+            if (token && user) {
+                // Kullanıcı giriş yapmış
+                authRequiredMessage.style.display = 'none';
+                randevuFormContainer.style.display = 'block';
+                
+                // Form alanlarını doldur
+                document.getElementById('ad').value = user.name;
+                document.getElementById('email').value = user.email;
+                document.getElementById('telefon').value = user.phone || '';
+
+                // Header'ı güncelle
+                userStatusContainer.innerHTML = `
+                    <span style="color: white; margin-right: 10px;">Merhaba, ${user.name}</span>
+                    <button onclick="logout()" style="background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">Çıkış Yap</button>
+                `;
+            } else {
+                // Kullanıcı giriş yapmamış
+                authRequiredMessage.style.display = 'block';
+                randevuFormContainer.style.display = 'none';
+                userStatusContainer.innerHTML = `<a href="user.html" class="user-button">Kullanıcı Girişi</a>`;
+            }
+        }
+
+        // Sayfa yüklendiğinde
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthAndUpdateUI();
+            
+            // URL'den doktor ID'sini al
+            const urlParams = new URLSearchParams(window.location.search);
+            const doctorId = urlParams.get('doctorId');
+            
+            if (doctorId) {
+                // Doktor bilgilerini getir ve formu doldur
+                fetch(`${DOCTORS_ENDPOINT}/${doctorId}`)
+                    .then(response => response.json())
+                    .then(doctor => {
+                        document.getElementById('bolum').value = doctor.specialization;
+                        document.getElementById('bolum').disabled = true;
+                        
+                        const doktorSelect = document.getElementById('doktor');
+                        doktorSelect.innerHTML = `<option value="${doctor._id}">${doctor.name}</option>`;
+                        doktorSelect.disabled = true;
+                    })
+                    .catch(error => {
+                        console.error('Doktor bilgileri yüklenirken hata:', error);
+                        alert('Doktor bilgileri yüklenirken bir hata oluştu.');
+                    });
+            }
+        });
+    </script>
 </body>
 </html>

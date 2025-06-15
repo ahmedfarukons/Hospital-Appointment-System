@@ -18,6 +18,65 @@ const doctorSchema = new mongoose.Schema({
 
 const Doctor = mongoose.model('Doctor', doctorSchema);
 
+// Örnek doktorları ekle
+router.post('/seed', async (req, res) => {
+    try {
+        // Mevcut doktorları sil
+        await Doctor.deleteMany({});
+
+        const doctors = [
+            {
+                name: "Dr. Ahmet Yılmaz",
+                specialization: "Dahiliye",
+                experience: 15,
+                education: "İstanbul Üniversitesi Tıp Fakültesi",
+                availableHours: [
+                    { day: "Pazartesi", startTime: "09:00", endTime: "17:00" },
+                    { day: "Çarşamba", startTime: "09:00", endTime: "17:00" },
+                    { day: "Cuma", startTime: "09:00", endTime: "17:00" }
+                ]
+            },
+            {
+                name: "Dr. Mehmet Demir",
+                specialization: "Kardiyoloji",
+                experience: 20,
+                education: "Ankara Üniversitesi Tıp Fakültesi",
+                availableHours: [
+                    { day: "Salı", startTime: "10:00", endTime: "18:00" },
+                    { day: "Perşembe", startTime: "10:00", endTime: "18:00" }
+                ]
+            },
+            {
+                name: "Dr. Zeynep Çelik",
+                specialization: "Nöroloji",
+                experience: 12,
+                education: "Hacettepe Üniversitesi Tıp Fakültesi",
+                availableHours: [
+                    { day: "Pazartesi", startTime: "09:00", endTime: "16:00" },
+                    { day: "Çarşamba", startTime: "09:00", endTime: "16:00" },
+                    { day: "Cuma", startTime: "09:00", endTime: "16:00" }
+                ]
+            },
+            {
+                name: "Dr. Mustafa Aydın",
+                specialization: "Ortopedi",
+                experience: 18,
+                education: "Ege Üniversitesi Tıp Fakültesi",
+                availableHours: [
+                    { day: "Salı", startTime: "09:00", endTime: "17:00" },
+                    { day: "Perşembe", startTime: "09:00", endTime: "17:00" },
+                    { day: "Cumartesi", startTime: "09:00", endTime: "17:00" }
+                ]
+            }
+        ];
+
+        await Doctor.insertMany(doctors);
+        res.status(201).json({ message: 'Doktorlar başarıyla eklendi' });
+    } catch (error) {
+        res.status(500).json({ message: 'Doktorlar eklenirken bir hata oluştu', error: error.message });
+    }
+});
+
 // Tüm doktorları getir
 router.get('/', async (req, res) => {
     try {

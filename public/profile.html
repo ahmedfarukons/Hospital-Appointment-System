@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilim - Sağlık Merkezi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo" onclick="window.location.href='index.html'">Sağlık Merkezi</div>
+            <ul>
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li><a href="randevu.html">Randevu Al</a></li>
+                <li><a href="doktorlar.html">Doktorlarımız</a></li>
+                <li><a href="iletisim.html">İletişim</a></li>
+            </ul>
+            <div id="user-status-container">
+                <!-- Kullanıcı durumu buraya JS ile yüklenecek -->
+                <a href="user.html" class="user-button">Kullanıcı Girişi</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="profile-section">
+            <h2>Profilim</h2>
+            <div id="user-info">
+                <h3>Kullanıcı Bilgileri</h3>
+                <p><strong>Ad Soyad:</strong> <span id="profile-name"></span></p>
+                <p><strong>E-posta:</strong> <span id="profile-email"></span></p>
+                <p><strong>Telefon:</strong> <span id="profile-phone"></span></p>
+            </div>
+
+            <h3>Randevularım</h3>
+            <div id="appointments-list">
+                <!-- Randevular buraya dinamik olarak yüklenecek -->
+                <p id="no-appointments-message" style="display: none;">Henüz bir randevunuz bulunmamaktadır.</p>
+            </div>
+
+            <div class="bottom-navigation">
+                <button onclick="window.location.href='index.html'" class="back-to-home-button">Ana Sayfaya Dön</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            updateUserStatus(); // Kullanıcı durumunu başlıkta güncelle
+            await loadUserProfile();
+            await loadUserAppointments();
+        });
+
+        async function loadUserProfile() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                document.getElementById('profile-name').textContent = user.name || 'N/A';
+                document.getElementById('profile-email').textContent = user.email || 'N/A';
+                document.getElementById('profile-phone').textContent = user.phone || 'N/A';
+            } else {
+                alert('Profil bilgilerini görüntülemek için giriş yapmalısınız.');
+                window.location.href = 'user.html';
+            }
+        }
+
+        async function loadUserAppointments() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const token = localStorage.getItem('token');
+            const appointmentsList = document.getElementById('appointments-list');
+            const noAppointmentsMessage = document.getElementById('no-appointments-message');
+
+            if (!user || !token) {
+                // Kullanıcı giriş yapmamışsa zaten yönlendirilmiş olması gerekir
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/appointments-mongo/user/${user._id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Randevular yüklenirken hata oluştu.');
+                }
+
+                const appointments = await response.json();
+
+                if (appointments.length === 0) {
+                    noAppointmentsMessage.style.display = 'block';
+                    appointmentsList.innerHTML = '';
+                    return;
+                }
+
+                noAppointmentsMessage.style.display = 'none';
+                appointmentsList.innerHTML = appointments.map(appointment => `
+                    <div class="appointment-card">
+                        <p><strong>Doktor:</strong> ${appointment.doctor ? appointment.doctor.name : 'Bilinmiyor'}</p>
+                        <p><strong>Bölüm:</strong> ${appointment.doctor ? appointment.doctor.specialization : 'Bilinmiyor'}</p>
+                        <p><strong>Tarih:</strong> ${new Date(appointment.date).toLocaleDateString()}</p>
+                        <p><strong>Saat:</strong> ${appointment.time}</p>
+                        <p><strong>Şikayet:</strong> ${appointment.complaint || 'Belirtilmemiş'}</p>
+                        <button class="cancel-appointment-btn" data-appointment-id="${appointment._id}">Randevuyu İptal Et</button>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Randevuları yüklerken hata:', error);
+                appointmentsList.innerHTML = '<p style="color: red;">Randevular yüklenemedi: ' + error.message + '</p>';
+            }
+        }
+
+        document.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('cancel-appointment-btn')) {
+                const appointmentId = e.target.dataset.appointmentId;
+                if (confirm('Bu randevuyu iptal etmek istediğinizden emin misiniz?')) {
+                    await cancelAppointment(appointmentId);
+                }
+            }
+        });
+
+        async function cancelAppointment(appointmentId) {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await fetch(`${API_BASE_URL}/appointments-mongo/${appointmentId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Randevu iptal edilirken hata oluştu.');
+                }
+
+                alert('Randevu başarıyla iptal edildi.');
+                await loadUserAppointments(); // Randevuları yeniden yükle
+            } catch (error) {
+                console.error('Randevu iptal edilirken hata:', error);
+                alert('Randevu iptal edilemedi: ' + error.message);
+            }
+        }
+
+    </script>
+</body>
+</html> 
