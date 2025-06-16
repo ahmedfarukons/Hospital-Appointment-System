@@ -25,9 +25,9 @@
 
 ### Son Versiyonumuzdan Örnekler
 
-![Ana Sayfa](images/Ekran görüntüsü 2025-06-16 030408.png)
-![Doktorlar Sayfası](images/Ekran görüntüsü 2025-06-16 030341.png)
-![İletişim Sayfası](images/Ekran görüntüsü 2025-06-16 131207.png)
+![Ana Sayfa](./images/Ekran%20görüntüsü%202025-06-16%20030408.png)
+![Doktorlar Sayfası](./images/Ekran%20görüntüsü%202025-06-16%20030341.png)
+![İletişim Sayfası](./images/Ekran%20görüntüsü%202025-06-16%20131207.png)
 
 ## **📂 Proje Dosya Yapısı**
 
