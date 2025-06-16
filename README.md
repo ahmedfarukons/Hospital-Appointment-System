@@ -23,7 +23,11 @@
 
 ## **🖥️ Ekran Görüntüsü**
 
-![Tablo](images/Tablo.png)
+### Son Versiyonumuzdan Örnekler
+
+![Ana Sayfa](images/homepage.png)
+![Doktorlar Sayfası](images/doctors.png)
+![İletişim Sayfası](images/contact.png)
 
 ## **📂 Proje Dosya Yapısı**
 
