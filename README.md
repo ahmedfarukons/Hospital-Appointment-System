@@ -9,13 +9,17 @@
 ## **🚀 Özellikler**
 
 - Online randevu alma ve yönetme
+- Kullanıcıya özel dashboard sayfası ile randevuları görüntüleme ve iptal etme
+- Kullanıcı profil bilgilerini düzenleme (Ad, Telefon)
 - Doktor ve bölüm filtreleme
 - Dinamik doktor listesi
-- Randevu onay ekranı
+- Randevu onay ekranı ve kullanıcı bilgilendirmesi
 - Modern ve responsive (mobil uyumlu) tasarım
 - Kullanıcı dostu arayüz
-- SQL veritabanı ile veri yönetimi
+- SQL veritabanı ile veri yönetimi (MongoDB entegrasyonu)
+- Gelişmiş kullanıcı kimlik doğrulama ve oturum yönetimi
 - İletişim ve hakkımızda sayfaları
+- **Geliştirilmiş Navigasyon ve Buton Hizalamaları**
 
 ## **🖥️ Ekran Görüntüsü**
 
@@ -28,7 +32,9 @@
 - `doktorlar.html` : Doktor listesi ve filtreleme
 - `hakkımızda.html` : Kurum hakkında bilgiler
 - `iletisim.html` : İletişim formu ve bilgiler
-- `onay.html` : Randevu onay ekranı
+- `dashboard.html` : Kullanıcı randevularının görüntülendiği kişisel panel
+- `profile.html` : Kullanıcı profil düzenleme sayfası
+- `user.html` : Kullanıcı giriş ve kayıt sayfası
 - `script.js` : Tüm sayfalarda kullanılan JavaScript dosyası
 - `style.css` : Tüm sayfalarda kullanılan stil dosyası
 - `hospital_appointment_system.sql` : SQL veritabanı şeması ve örnek veriler
@@ -42,20 +48,28 @@
 2. **Veritabanı Kurulumu:**
    - `hospital_appointment_system.sql` dosyasını bir MySQL/MariaDB veritabanına içe aktarın.
    - Veritabanı adı: `hospital appointment system`
+   - Not: Proje artık MongoDB ile de entegre çalışmaktadır. Gerekli MongoDB ayarlarını backend (sunucu) tarafında yapmanız gerekebilir.
 
 3. **Projeyi Çalıştırma:**
    - Tüm dosyaları bir web sunucusunda (ör. XAMPP, WAMP veya canlı sunucu) çalıştırabilirsiniz.
    - `index.html` dosyasını tarayıcıda açarak kullanmaya başlayabilirsiniz.
+   - API servisinizin (backend) doğru şekilde çalıştığından ve `http://localhost:3000/api` adresinde erişilebilir olduğundan emin olun.
 
 ## **📝 Kullanım**
 
+- **Kullanıcı Girişi/Kaydı:**
+  - Sağ üstteki "Kullanıcı Girişi" butonuna tıklayarak veya `user.html` sayfasına giderek kayıt olabilir veya mevcut hesabınızla giriş yapabilirsiniz.
 - **Randevu Al:**
-  - Ana sayfadan veya `randevu.html` üzerinden gerekli bilgileri doldurarak randevu oluşturabilirsiniz.
-  - Randevu oluşturduktan sonra onay ekranına yönlendirilirsiniz.
-- **Doktorları Görüntüle:**
-  - `doktorlar.html` sayfasında bölüm seçerek ilgili doktorları filtreleyebilirsiniz.
+  - Ana sayfadan, "Randevu Al" sayfasından veya doktorlar sayfasındaki doktor kartlarından gerekli bilgileri doldurarak randevu oluşturabilirsiniz.
+  - Randevu oluşturduktan sonra randevularınızın listelendiği dashboard sayfasına yönlendirilirsiniz.
+- **Randevuları Görüntüle ve İptal Et:**
+  - Giriş yaptıktan sonra "Randevularım" veya "Dashboard" butonuna tıklayarak mevcut randevularınızı görebilir, durumlarını takip edebilir ve iptal edebilirsiniz.
+- **Profil Düzenleme:**
+  - Dashboard sayfasındaki "✏️ Profilimi Düzenle" butonuna tıklayarak adınızı ve telefon numaranızı güncelleyebilirsiniz.
+- **Doktorları Görüntüle ve Randevu Al:**
+  - `doktorlar.html` sayfasında bölüm seçerek ilgili doktorları filtreleyebilir ve doğrudan doktor kartları üzerinden randevu oluşturabilirsiniz.
 - **İletişim:**
-  - `iletisim.html` sayfasından sağlık merkeziyle iletişime geçebilirsiniz.
+  - `iletisim.html` sayfasından sağlık merkeziyle iletişime geçebilirsiniz. İletişim bilgileri ve formu ortalanmış, navigasyon butonları düzgün hizalanmıştır.
 
 ## **🎬 Tanıtım ve Kullanım Videosu**
 
@@ -81,8 +95,9 @@ Bu proje, eğitim ve demo amaçlıdır. Ticari kullanım için lütfen proje sah
 
 - **HTML5**: Sayfa yapısı ve içerik için
 - **CSS3**: Modern ve mobil uyumlu tasarım için
-- **JavaScript (Vanilla JS)**: Dinamik işlemler, form kontrolleri ve kullanıcı etkileşimi için
+- **JavaScript (Vanilla JS)**: Dinamik işlemler, form kontrolleri ve kullanıcı etkileşimi için (API entegrasyonu)
 - **SQL (MySQL/MariaDB)**: Randevu, doktor ve hasta verilerinin yönetimi için (veritabanı şeması ve örnek verilerle)
+- **MongoDB**: Kullanıcı ve randevu verilerinin yönetimi için (backend entegrasyonu gerektirir)
 
 ### **Sitenin Yapabilecekleri**
 
@@ -91,6 +106,8 @@ Bu proje, eğitim ve demo amaçlıdır. Ticari kullanım için lütfen proje sah
 - Randevu saat ve tarih seçimi
 - Kullanıcı dostu, hızlı ve mobil uyumlu arayüz
 - Kurum hakkında bilgi ve iletişim formu
-- SQL veritabanı ile gerçekçi veri yönetimi (örnek veriyle birlikte)
+- Randevuları görüntüleme ve iptal etme (dashboard üzerinden)
+- Kullanıcı profil bilgilerini düzenleme
+- Gelişmiş hata yönetimi ve kullanıcı geri bildirimleri
 
-> **Not:** Proje, temel olarak front-end (istemci tarafı) teknolojileriyle geliştirilmiştir. Veritabanı işlemleri için örnek SQL dosyası sunulmuştur. Gelişmiş back-end entegrasyonu için ek geliştirme yapılabilir.
+> **Not:** Proje, temel olarak front-end (istemci tarafı) teknolojileriyle geliştirilmiştir. Veritabanı işlemleri için örnek SQL dosyası sunulmuştur. Gelişmiş back-end entegrasyonu ve MongoDB kullanımı için ek geliştirme yapılmıştır. API servisinizin doğru şekilde çalıştığından emin olun.
